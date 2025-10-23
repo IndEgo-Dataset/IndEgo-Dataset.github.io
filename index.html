@@ -30,7 +30,8 @@
         .project-header .authors a:hover { text-decoration: underline; }
         .project-header .notes { font-size: 0.9em; color: #586069; margin-bottom: 15px; }
         .project-header .affiliations { font-size: 1em; color: #586069; line-height: 1.5; margin-bottom: 20px; }
-        .project-header .conference { font-size: 1.1em; font-weight: 600; margin-top: 20px; margin-bottom: 20px; }
+        .project-header .conference { font-size: 1.1em; font-weight: 600; margin-top: 20px; margin-bottom: 20px; display: flex; justify-content: center; align-items: center; gap: 15px; }
+        .project-header .conference img { height: 40px; } /* UPDATED: Increased NeurIPS logo size */
         .project-header .links { margin-top: 20px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; }
         .project-header .button { display: inline-block; padding: 12px 24px; background-color: #24292e; color: white; font-size: 1em; font-weight: 600; text-decoration: none; border-radius: 30px; transition: background-color 0.2s ease-in-out; }
         .project-header .button:hover { background-color: #4a525a; }
@@ -39,7 +40,7 @@
 
         /* --- Main Content Styling --- */
         main {
-            max-width: 1200px; /* Increased max-width for a better grid layout */
+            max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -60,12 +61,11 @@
         li { margin-bottom: 10px; }
         .intro-text { text-align: center; font-size: 1.2em; margin-bottom: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
         
-        /* --- NEW AND IMPROVED VIDEO GRID STYLING --- */
+        /* --- Video Grid Styling --- */
         .video-grid {
             display: grid;
-            /* This creates a responsive grid. It will fit as many 280px columns as it can. */
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px; /* The space between videos */
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); /* UPDATED: Increased min-width to make videos larger */
+            gap: 25px;
         }
         .video-container {
             text-align: center;
@@ -75,16 +75,14 @@
             margin-bottom: 10px;
             font-size: 1.1em;
         }
-        /* This wrapper enforces the 16:9 aspect ratio */
         .video-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* 9 / 16 = 0.5625, for a 16:9 ratio */
+            padding-top: 56.25%;
             border-radius: 8px;
-            overflow: hidden; /* Hides anything that might spill out */
+            overflow: hidden;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
         }
-        /* This makes the iframe fill the wrapper perfectly */
         .video-wrapper iframe {
             position: absolute;
             top: 0;
@@ -96,6 +94,28 @@
 
         .tech-image { width: 100%; max-width: 600px; display: block; margin: 20px auto; border-radius: 8px; }
         .bibtex-code { background-color: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 16px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; font-size: 0.85em; white-space: pre-wrap; word-wrap: break-word; }
+
+        /* --- Sponsors Section Styling --- */
+        .sponsors-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+            margin-top: 30px;
+        }
+        .sponsor-item a {
+            display: block;
+        }
+        .sponsor-item img {
+            max-width: 150px; /* UPDATED: Standardized logo width */
+            height: auto;     /* UPDATED: Height adjusts automatically to maintain aspect ratio */
+            filter: grayscale(100%);
+            transition: filter 0.3s ease-in-out;
+        }
+        .sponsor-item:hover img {
+            filter: grayscale(0%);
+        }
     </style>
 </head>
 <body>
@@ -125,14 +145,13 @@
         </div>
         <div class="conference">
             <img src="assets/NeurIPS-logo.svg" alt="NeurIPS Logo">
-            <span>Published at NeurIPS 2024</span>
+            <span>Published at NeurIPS 2025</span>
         </div>
         <div class="links">
             <a href="https://openreview.net/forum?id=jKw3Qhc8m1" class="button"><i class="fas fa-file-pdf"></i> Paper</a>
             <a href="https://huggingface.co/datasets/FraunhoferIPK/IndEgo" class="button"><i class="fas fa-database"></i> Dataset</a>
             <a href="https://github.com/IndEgo-Dataset/IndEgo" class="button"><i class="fab fa-github"></i> Code</a>
             <a href="https://neurips.cc/virtual/2025/poster/121501" class="button"><i class="fas fa-users"></i> NeurIPS Page</a>
-            </a>
         </div>
     </header>
 
@@ -235,7 +254,6 @@
 
        <hr>
 
-        <!-- NEW ACKNOWLEDGMENTS AND FUNDING SECTION -->
         <section>
             <h2>🏆 Acknowledgments & Funding</h2>
             <p style="text-align: center;">This work is funded by the German Federal Ministry of Research, Technology and Space (BMFTR) and the German Aerospace Center (DLR) under the KIKERP project (Grant No. 16IS23055C) in the KI4KMU program. We thank the Meta AI team and Reality Labs for the Project Aria initiative, including the research kit, the open-source tools and related services. The data collection for this study was carried out at the IWF research labs and the test field at TU Berlin. Lastly, we sincerely thank the student volunteers and workers who participated in the data collection process.</p>
@@ -261,4 +279,5 @@
     </main>
 
 </body>
+</html>
 </html>
