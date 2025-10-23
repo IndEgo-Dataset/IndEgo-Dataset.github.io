@@ -9,97 +9,99 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
-        /* This block contains all the styling for the page */
+        /* --- General Page Styling --- */
         body {
             margin: 0;
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji";
             color: #24292e;
+            line-height: 1.6;
         }
 
+        /* --- Header Styling --- */
         .project-header {
             text-align: center;
             padding: 40px 20px;
-            max-width: 800px;
+            max-width: 900px;
             margin: 40px auto;
         }
+        .project-header h1 { font-size: 2.4em; font-weight: 600; margin-bottom: 20px; line-height: 1.2; }
+        .project-header .authors { font-size: 1.1em; line-height: 1.6; margin-bottom: 10px; }
+        .project-header .authors a { color: #0366d6; text-decoration: none; font-weight: 500; }
+        .project-header .authors a:hover { text-decoration: underline; }
+        .project-header .notes { font-size: 0.9em; color: #586069; margin-bottom: 15px; }
+        .project-header .affiliations { font-size: 1em; color: #586069; line-height: 1.5; margin-bottom: 20px; }
+        .project-header .conference { font-size: 1.1em; font-weight: 600; margin-top: 20px; margin-bottom: 20px; }
+        .project-header .links { margin-top: 20px; display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 10px; }
+        .project-header .button { display: inline-block; padding: 12px 24px; background-color: #24292e; color: white; font-size: 1em; font-weight: 600; text-decoration: none; border-radius: 30px; transition: background-color 0.2s ease-in-out; }
+        .project-header .button:hover { background-color: #4a525a; }
+        .project-header .button i { margin-right: 8px; }
+        .project-header .colab-badge { vertical-align: middle; }
 
-        .project-header h1 {
-            font-size: 2.4em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            line-height: 1.2;
+        /* --- Main Content Styling --- */
+        main {
+            max-width: 1200px; /* Increased max-width for a better grid layout */
+            margin: 0 auto;
+            padding: 20px;
         }
-
-        .project-header .authors {
-            font-size: 1.1em;
-            line-height: 1.6;
+        section {
+            margin-bottom: 40px;
+        }
+        h2, h3 {
+            font-weight: 600;
+            border-bottom: 1px solid #e1e4e8;
+            padding-bottom: 10px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+        h2 { font-size: 2em; }
+        h3 { font-size: 1.5em; }
+        hr { border: 0; height: 1px; background-color: #e1e4e8; margin: 50px 0; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        .intro-text { text-align: center; font-size: 1.2em; margin-bottom: 30px; max-width: 900px; margin-left: auto; margin-right: auto; }
+        
+        /* --- NEW AND IMPROVED VIDEO GRID STYLING --- */
+        .video-grid {
+            display: grid;
+            /* This creates a responsive grid. It will fit as many 280px columns as it can. */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px; /* The space between videos */
+        }
+        .video-container {
+            text-align: center;
+        }
+        .video-container strong {
+            display: block;
             margin-bottom: 10px;
-        }
-
-        .project-header .authors a {
-            color: #0366d6;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .project-header .authors a:hover {
-            text-decoration: underline;
-        }
-
-        .project-header .notes {
-            font-size: 0.9em;
-            color: #586069;
-            margin-bottom: 15px;
-        }
-
-        .project-header .affiliations {
-            font-size: 1em;
-            color: #586069;
-            line-height: 1.5;
-            margin-bottom: 20px;
-        }
-
-        .project-header .conference {
             font-size: 1.1em;
-            font-weight: 600;
-            color: #24292e;
-            margin-top: 20px;
-            margin-bottom: 20px;
+        }
+        /* This wrapper enforces the 16:9 aspect ratio */
+        .video-wrapper {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 9 / 16 = 0.5625, for a 16:9 ratio */
+            border-radius: 8px;
+            overflow: hidden; /* Hides anything that might spill out */
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        /* This makes the iframe fill the wrapper perfectly */
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
         }
 
-        .project-header .links {
-            margin-top: 20px;
-        }
-
-        .project-header .button {
-            display: inline-block;
-            padding: 12px 24px;
-            margin: 5px;
-            background-color: #24292e;
-            color: white;
-            font-size: 1em;
-            font-weight: 600;
-            text-decoration: none;
-            border-radius: 30px;
-            transition: background-color 0.2s ease-in-out;
-        }
-
-        .project-header .button:hover {
-            background-color: #4a525a;
-        }
-
-        .project-header .button i {
-            margin-right: 8px;
-        }
+        .tech-image { width: 100%; max-width: 600px; display: block; margin: 20px auto; border-radius: 8px; }
+        .bibtex-code { background-color: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 16px; font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace; font-size: 0.85em; white-space: pre-wrap; word-wrap: break-word; }
     </style>
 </head>
 <body>
 
     <header class="project-header">
-        <!-- Paper Title -->
         <h1>IndEgo: A Dataset of Industrial Scenarios and Collaborative Work for Egocentric Assistants</h1>
-
-        <!-- Author List -->
         <div class="authors">
             <a href="https://vivekchavan.com/">Vivek Chavan</a><sup>1,2,*</sup>,
             <a href="https://www.linkedin.com/in/yasmina-imgrund/">Yasmina Imgrund</a><sup>2,†</sup>,
@@ -110,14 +112,10 @@
             <a href="https://www.linkedin.com/in/oliver-heimann/">Oliver Heimann</a><sup>1</sup>,
             <a href="https://www.tu.berlin/iat/ueber-uns/leitung">Jörg Krüger</a><sup>1,2</sup>
         </div>
-
-        <!-- Author Notes (Project Lead, etc.) -->
         <div class="notes">
             <sup>*</sup>Project Lead. Correspondence: <a href="mailto:contact@vivekchavan.com">contact@vivekchavan.com</a><br>
             <sup>†</sup>Work done during student theses/projects at Fraunhofer IPK, Berlin.
         </div>
-
-        <!-- Affiliations -->
         <div class="affiliations">
             <sup>1</sup>Fraunhofer IPK, Berlin &nbsp;&nbsp;&nbsp;
             <sup>2</sup>Technical University of Berlin &nbsp;&nbsp;&nbsp;
@@ -125,12 +123,9 @@
             <sup>4</sup>RWTH Aachen University &nbsp;&nbsp;&nbsp;
             <sup>5</sup>Leibniz University Hannover
         </div>
-
-        <!-- Conference Name -->
         <div class="conference">
-            Published at NeurIPS 2025
+            Published at NeurIPS 2024
         </div>
-
         <div class="links">
             <a href="[LINK_TO_YOUR_PAPER_PDF_OR_ARXIV]" class="button"><i class="fas fa-file-pdf"></i> Paper</a>
             <a href="https://github.com/IndEgo-Dataset/IndEgo" class="button"><i class="fab fa-github"></i> Code</a>
@@ -154,23 +149,33 @@
             <div class="video-grid">
                 <div class="video-container">
                     <strong>Assembly/Disassembly</strong>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/xvs_uFhwrvs?autoplay=1&mute=1&loop=1&playlist=xvs_uFhwrvs" title="Assembly Disassembly" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/xvs_uFhwrvs?autoplay=1&mute=1&loop=1&playlist=xvs_uFhwrvs&controls=0" title="Assembly Disassembly" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="video-container">
                     <strong>Inspection/Repair</strong>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/yVn7pm8EPig?autoplay=1&mute=1&loop=1&playlist=yVn7pm8EPig" title="Inspection Repair" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/yVn7pm8EPig?autoplay=1&mute=1&loop=1&playlist=yVn7pm8EPig&controls=0" title="Inspection Repair" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="video-container">
                     <strong>Logistics</strong>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/Euxye9HInk4?autoplay=1&mute=1&loop=1&playlist=Euxye9HInk4" title="Logistics" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/Euxye9HInk4?autoplay=1&mute=1&loop=1&playlist=Euxye9HInk4&controls=0" title="Logistics" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="video-container">
                     <strong>Woodworking</strong>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/UVzIk0A3OQ4?autoplay=1&mute=1&loop=1&playlist=UVzIk0A3OQ4" title="Woodworking" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/UVzIk0A3OQ4?autoplay=1&mute=1&loop=1&playlist=UVzIk0A3OQ4&controls=0" title="Woodworking" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
                 <div class="video-container">
                     <strong>Miscellaneous</strong>
-                    <iframe width="100%" height="200" src="https://www.youtube.com/embed/JPehcSF_tGc?autoplay=1&mute=1&loop=1&playlist=JPehcSF_tGc" title="Miscellaneous" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    <div class="video-wrapper">
+                        <iframe src="https://www.youtube.com/embed/JPehcSF_tGc?autoplay=1&mute=1&loop=1&playlist=JPehcSF_tGc&controls=0" title="Miscellaneous" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    </div>
                 </div>
             </div>
         </section>
@@ -202,7 +207,9 @@
 
         <section>
             <h2>🎬 Demo Video</h2>
-            <iframe width="100%" height="500" src="https://www.youtube.com/embed/ric5f6jH7AI?autoplay=1&loop=1&mute=1&playlist=ric5f6jH7AI" title="IndEgo Demo Video" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            <div class="video-wrapper" style="max-width: 900px; margin: auto;">
+                 <iframe width="100%" height="500" src="https://www.youtube.com/embed/ric5f6jH7AI?autoplay=1&loop=1&mute=1&playlist=ric5f6jH7AI" title="IndEgo Demo Video" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+            </div>
         </section>
 
         <section>
