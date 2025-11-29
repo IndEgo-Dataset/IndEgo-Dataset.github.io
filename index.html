@@ -162,55 +162,54 @@
             <p>Click the button below to play the recording and slides videos in sync.</p>
 
               <div id="talk-videos"
-                   style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+                 style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
             
-                <!-- Webcam -->
-                <div style="flex:1 1 400px; max-width:560px; text-align:center;">
-                  <iframe
-                    id="yt-webcam"
-                    width="560"
-                    height="315"
-                    src="https://www.youtube.com/embed/pVOBRYW4D5Q?enablejsapi=1&rel=0&modestbranding=1"
-                    title="IndEgo NeurIPS Talk - Webcam"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                  <div style="font-size:0.9rem; color:#666; margin-top:4px;">Webcam</div>
-                </div>
-            
-                <!-- Slides -->
-                <div style="flex:1 1 400px; max-width:560px; text-align:center;">
-                  <iframe
-                    id="yt-slides"
-                    width="560"
-                    height="315"
-                    src="https://www.youtube.com/embed/SnGhtJjz6JQ?enablejsapi=1&rel=0&modestbranding=1"
-                    title="IndEgo NeurIPS Talk - Slides"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen>
-                  </iframe>
-                  <div style="font-size:0.9rem; color:#666; margin-top:4px;">Slides</div>
-                </div>
-            
+              <!-- Webcam -->
+              <div style="flex:1 1 400px; max-width:560px; text-align:center;">
+                <iframe
+                  id="yt-webcam"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/pVOBRYW4D5Q?enablejsapi=1&rel=0&modestbranding=1"
+                  title="IndEgo NeurIPS Talk - Webcam"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+                <div style="font-size:0.9rem; color:#666; margin-top:4px;">Webcam</div>
               </div>
             
-              <div style="text-align:center; margin-bottom: 10px;">
-                <button id="play-both"
-                        style="padding:8px 16px; margin-right:10px; cursor:pointer;">
-                  ▶ Play both
-                </button>
-                <button id="pause-both"
-                        style="padding:8px 16px; cursor:pointer;">
-                  ⏸ Pause both
-                </button>
+              <!-- Slides -->
+              <div style="flex:1 1 400px; max-width:560px; text-align:center;">
+                <iframe
+                  id="yt-slides"
+                  width="560"
+                  height="315"
+                  src="https://www.youtube.com/embed/SnGhtJjz6JQ?enablejsapi=1&rel=0&modestbranding=1"
+                  title="IndEgo NeurIPS Talk - Slides"
+                  frameborder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowfullscreen>
+                </iframe>
+                <div style="font-size:0.9rem; color:#666; margin-top:4px;">Slides</div>
               </div>
             
-              <p style="text-align:center; font-size:0.9rem; color:#666;">
-                Tip: Press “Play both” to start the synced webcam + slides view.
-              </p>
-
+            </div>
+            
+            <div style="text-align:center; margin-bottom: 10px;">
+              <button id="play-both"
+                      style="padding:8px 16px; margin-right:10px; cursor:pointer;">
+                ▶ Play both
+              </button>
+              <button id="pause-both"
+                      style="padding:8px 16px; cursor:pointer;">
+                ⏸ Pause both
+              </button>
+            </div>
+            
+            <p style="text-align:center; font-size:0.9rem; color:#666;">
+              Tip: Press “Play both” to start the synced webcam + slides view.
+            </p>
         
         
 
@@ -357,57 +356,41 @@
 
 <script src="https://www.youtube.com/iframe_api"></script>
 <script>
-  let playerWebcam;
-  let playerSlides;
+  var playerWebcam = null;
+  var playerSlides = null;
 
+  // Called by YouTube when the IFrame API is ready
   function onYouTubeIframeAPIReady() {
-    playerWebcam = new YT.Player('yt-webcam', {
-      events: {
-        'onReady': onWebcamReady
-      }
-    });
-
-    playerSlides = new YT.Player('yt-slides', {
-      events: {
-        'onReady': onSlidesReady
-      }
-    });
-  }
-
-  function onWebcamReady(event) {
-    // Keep webcam light: 360p-ish
-    event.target.setPlaybackQuality('small');   // try 'medium' if this looks too bad
-  }
-
-  function onSlidesReady(event) {
-    // Slides can stay sharper
-    event.target.setPlaybackQuality('hd720');   // or 'large' if 720p is too heavy
+    playerWebcam = new YT.Player('yt-webcam');
+    playerSlides = new YT.Player('yt-slides');
   }
 
   function playBoth() {
-    if (playerWebcam && playerSlides) {
-      try {
-        // Restart both from the beginning for best sync
-        playerWebcam.seekTo(0, true);
-        playerSlides.seekTo(0, true);
-      } catch (e) {
-        // ignore if they aren't fully ready yet
-      }
-      playerWebcam.playVideo();
-      playerSlides.playVideo();
+    if (!playerWebcam || !playerSlides) {
+      return; // players not ready yet
     }
+    // Restart from beginning to keep sync reasonably aligned
+    try {
+      playerWebcam.seekTo(0, true);
+      playerSlides.seekTo(0, true);
+    } catch (e) {
+      // ignore if seek not available yet
+    }
+    playerWebcam.playVideo();
+    playerSlides.playVideo();
   }
 
   function pauseBoth() {
-    if (playerWebcam && playerSlides) {
-      playerWebcam.pauseVideo();
-      playerSlides.pauseVideo();
+    if (!playerWebcam || !playerSlides) {
+      return;
     }
+    playerWebcam.pauseVideo();
+    playerSlides.pauseVideo();
   }
 
   document.addEventListener('DOMContentLoaded', function () {
-    const playBtn = document.getElementById('play-both');
-    const pauseBtn = document.getElementById('pause-both');
+    var playBtn = document.getElementById('play-both');
+    var pauseBtn = document.getElementById('pause-both');
 
     if (playBtn) playBtn.addEventListener('click', playBoth);
     if (pauseBtn) pauseBtn.addEventListener('click', pauseBoth);
