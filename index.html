@@ -353,24 +353,44 @@
 
     </main>
 
-    <script src="https://www.youtube.com/iframe_api"></script>
+<script src="https://www.youtube.com/iframe_api"></script>
 <script>
   let playerWebcam;
   let playerSlides;
 
-  // Called by the YouTube IFrame API when it's ready
   function onYouTubeIframeAPIReady() {
-    playerWebcam = new YT.Player('yt-webcam');
-    playerSlides = new YT.Player('yt-slides');
+    playerWebcam = new YT.Player('yt-webcam', {
+      events: {
+        'onReady': onWebcamReady
+      }
+    });
+
+    playerSlides = new YT.Player('yt-slides', {
+      events: {
+        'onReady': onSlidesReady
+      }
+    });
+  }
+
+  function onWebcamReady(event) {
+    // Keep webcam light: 360p-ish
+    event.target.setPlaybackQuality('small');   // try 'medium' if this looks too bad
+  }
+
+  function onSlidesReady(event) {
+    // Slides can stay sharper
+    event.target.setPlaybackQuality('hd720');   // or 'large' if 720p is too heavy
   }
 
   function playBoth() {
     if (playerWebcam && playerSlides) {
       try {
-        // start from beginning each time to keep them aligned
+        // Restart both from the beginning for best sync
         playerWebcam.seekTo(0, true);
         playerSlides.seekTo(0, true);
-      } catch (e) {}
+      } catch (e) {
+        // ignore if they aren't fully ready yet
+      }
       playerWebcam.playVideo();
       playerSlides.playVideo();
     }
