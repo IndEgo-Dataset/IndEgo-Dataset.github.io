@@ -155,30 +155,57 @@
 
     <main>
 
-          <p>Click the button below to play the recording and slides videos in sync.</p>
-        
-          <div id="talk-videos"
-               style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
-            <div id="player-webcam"
-                 style="flex:1 1 400px; max-width:560px; aspect-ratio:16/9;"></div>
-            <div id="player-slides"
-                 style="flex:1 1 400px; max-width:560px; aspect-ratio:16/9;"></div>
-          </div>
-        
-          <div style="text-align:center; margin-bottom: 10px;">
-            <button id="play-both"
-                    style="padding:8px 16px; margin-right:10px; cursor:pointer;">
-              ▶ Play both
-            </button>
-            <button id="pause-both"
-                    style="padding:8px 16px; cursor:pointer;">
-              ⏸ Pause both
-            </button>
-          </div>
-        
-          <p style="text-align:center; font-size:0.9rem; color:#666;">
-            Tip: Press “Play both” to start the synced webcam + slides view.
-          </p>
+            <p>Click the button below to play the recording and slides videos in sync.</p>
+
+              <div id="talk-videos"
+                   style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+            
+                <!-- Webcam -->
+                <div style="flex:1 1 400px; max-width:560px; text-align:center;">
+                  <iframe
+                    id="yt-webcam"
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/pVOBRYW4D5Q?enablejsapi=1&rel=0&modestbranding=1"
+                    title="IndEgo NeurIPS Talk - Webcam"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                  </iframe>
+                  <div style="font-size:0.9rem; color:#666; margin-top:4px;">Webcam</div>
+                </div>
+            
+                <!-- Slides -->
+                <div style="flex:1 1 400px; max-width:560px; text-align:center;">
+                  <iframe
+                    id="yt-slides"
+                    width="560"
+                    height="315"
+                    src="https://www.youtube.com/embed/SnGhtJjz6JQ?enablejsapi=1&rel=0&modestbranding=1"
+                    title="IndEgo NeurIPS Talk - Slides"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen>
+                  </iframe>
+                  <div style="font-size:0.9rem; color:#666; margin-top:4px;">Slides</div>
+                </div>
+            
+              </div>
+            
+              <div style="text-align:center; margin-bottom: 10px;">
+                <button id="play-both"
+                        style="padding:8px 16px; margin-right:10px; cursor:pointer;">
+                  ▶ Play both
+                </button>
+                <button id="pause-both"
+                        style="padding:8px 16px; cursor:pointer;">
+                  ⏸ Pause both
+                </button>
+              </div>
+            
+              <p style="text-align:center; font-size:0.9rem; color:#666;">
+                Tip: Press “Play both” to start the synced webcam + slides view.
+              </p>
 
         <p class="intro-text">
             Welcome to <strong>IndEgo</strong>, a <strong>NeurIPS 2025 Datasets & Benchmarks Track</strong> accepted dataset and open-source framework for <strong>industrial egocentric vision</strong>, designed to support <strong>training, real-time guidance, process improvement, and collaboration</strong>.
@@ -325,6 +352,45 @@
         </section>
 
     </main>
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+<script>
+  let playerWebcam;
+  let playerSlides;
+
+  // Called by the YouTube IFrame API when it's ready
+  function onYouTubeIframeAPIReady() {
+    playerWebcam = new YT.Player('yt-webcam');
+    playerSlides = new YT.Player('yt-slides');
+  }
+
+  function playBoth() {
+    if (playerWebcam && playerSlides) {
+      try {
+        // start from beginning each time to keep them aligned
+        playerWebcam.seekTo(0, true);
+        playerSlides.seekTo(0, true);
+      } catch (e) {}
+      playerWebcam.playVideo();
+      playerSlides.playVideo();
+    }
+  }
+
+  function pauseBoth() {
+    if (playerWebcam && playerSlides) {
+      playerWebcam.pauseVideo();
+      playerSlides.pauseVideo();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function () {
+    const playBtn = document.getElementById('play-both');
+    const pauseBtn = document.getElementById('pause-both');
+
+    if (playBtn) playBtn.addEventListener('click', playBoth);
+    if (pauseBtn) pauseBtn.addEventListener('click', pauseBoth);
+  });
+</script>
 
 </body>
 </html>
