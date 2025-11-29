@@ -154,7 +154,32 @@
     </header>
 
     <main>
-       
+
+          <p>Click the button below to play the recording and slides videos in sync.</p>
+        
+          <div id="talk-videos"
+               style="display:flex; gap:20px; justify-content:center; flex-wrap:wrap; margin:20px 0;">
+            <div id="player-webcam"
+                 style="flex:1 1 400px; max-width:560px; aspect-ratio:16/9;"></div>
+            <div id="player-slides"
+                 style="flex:1 1 400px; max-width:560px; aspect-ratio:16/9;"></div>
+          </div>
+        
+          <div style="text-align:center; margin-bottom: 10px;">
+            <button id="play-both"
+                    style="padding:8px 16px; margin-right:10px; cursor:pointer;">
+              ▶ Play both
+            </button>
+            <button id="pause-both"
+                    style="padding:8px 16px; cursor:pointer;">
+              ⏸ Pause both
+            </button>
+          </div>
+        
+          <p style="text-align:center; font-size:0.9rem; color:#666;">
+            Tip: Press “Play both” to start the synced webcam + slides view.
+          </p>
+
         <p class="intro-text">
             Welcome to <strong>IndEgo</strong>, a <strong>NeurIPS 2025 Datasets & Benchmarks Track</strong> accepted dataset and open-source framework for <strong>industrial egocentric vision</strong>, designed to support <strong>training, real-time guidance, process improvement, and collaboration</strong>.
         </p>
